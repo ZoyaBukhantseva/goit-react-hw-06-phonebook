@@ -1,3 +1,23 @@
 .FilterLable {
   margin: 10px;
 }
+.input{
+  margin-left: 30px;
+  display: block;
+  min-width: 280px;
+  height: 30px;
+  border: #230258 solid 1px;
+  border-radius: 4px;
+  background-color: #23025886;
+}
+.input::placeholder{
+color: #fff;
+padding: 10px;
+font-family: 'Courier New', Courier, monospace;
+}
+.item{
+  margin: 0px 30px;
+  font-size: 18px;
+  font-style: normal;
+
+}

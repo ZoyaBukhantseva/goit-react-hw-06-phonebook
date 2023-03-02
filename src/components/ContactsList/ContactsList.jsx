@@ -1,34 +1,26 @@
 import React from 'react';
 import ContactListItem from './ContactListItem';
-import PropTypes from 'prop-types';
+import { useSelector } from "react-redux";
+import { getContactsState, getFiltrState, getFileteredContacts } from 'redux/selectors';
 
-const ContactList = ({ filteredContacts, deleteContact }) => {
-  
-  return (
-    <ul>
-      {filteredContacts.map(contact => (
-        <ContactListItem
-          key={contact.id}
-          id={contact.id}
-          name={contact.name}
-          number={contact.number}
-          deleteContact={deleteContact}
-        />
-      ))}
-    </ul>
-  );
-};
+const ContactList = () => {
+ 
+  const contactState = useSelector(getContactsState);
+  const filterState = useSelector(getFiltrState);
 
-ContactList.propTypes = {
-  filteredContacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  const contactList = filterState ? getFileteredContacts(contactState ,filterState) : contactState;
 
-  deleteContact: PropTypes.func.isRequired,
-};
+    return (
+      <ul>
+        { contactList.map((element)=> {
+          return <ContactListItem key = { element.id }
+             id = { element.id }
+             name = { element.name }
+             number = { element.number }
+          />
+        }) }
+      </ul>   
+    );
+}
 
 export default ContactList;

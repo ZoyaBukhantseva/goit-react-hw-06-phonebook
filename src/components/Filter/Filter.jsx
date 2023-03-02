@@ -1,26 +1,34 @@
 import React from 'react';
 import styles from './Filter.module.css';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from "react-redux";
+import { updFilter } from '..//..//redux/filterSlise';
+import { getFiltrState } from 'redux/selectors'
 
-const Filter = ({ filter, inputHandler }) => {
+const Filter = () => {
+  const filterState = useSelector(getFiltrState);
+  const dispatch = useDispatch();
+
+  const  hendleChange = (e) => {
+      const findName = e.currentTarget.value;
+      dispatch(updFilter(findName));
+   };
+
   return (
     <>
-      <p>Find contacts by name</p>
+      <p  className={styles.item}>Find contacts by name</p>
       <label className={styles.FilterLable}>
         <input
-          onChange={inputHandler}
+        className={styles.input}
+          onChange={hendleChange}
           type="text"
           name="filter"
           placeholder="Enter name..."
-          value={filter}
+          value={ filterState }
         />
       </label>
     </>
   );
 };
 export default Filter;
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  inputHandler: PropTypes.func.isRequired,
-};
+
 

@@ -1,58 +1,49 @@
-import React, { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { addContact } from '..//..//redux/contactSlise';
+import { useSelector ,useDispatch } from 'react-redux';
+import { getContactsState } from 'redux/selectors';
 import styles from './ContactForm.module.css';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
-class ContactForm extends Component {
-  initialState = {
-    name: '',
-    number: '',
-  };
-  state = {
-    name: '',
-    number: '',
-  };
-  handleSubmit = e => {
-    e.preventDefault();
-    const singleContact = {
-      name: this.state.name,
-      number: this.state.number,
-      id: uuidv4(),
-    };
-    this.props.addToPhonebook(singleContact);
-    this.setState({ ...this.initialState });
-  };
+const ContactForm=()=>{
+  const dispatch = useDispatch();
+  const contactState = useSelector(getContactsState);
+ const handleSubmit = e => {
 
-  inputHandler = ({ target }) => {
-    const { value, name } = target;
+  e.preventDefault();
+  const form = e.currentTarget;
+  const name = form.elements.name.value;
+  const number = form.elements.number.value;
 
-    this.setState({ [name]: value });
-  };
+  const newContact = { name, number };
 
-  render() {
-    const { name, number } = this.state;
-    return (
+  const isPresentContact = contactState.find(element => 
+      element.name.toLowerCase() === newContact.name.toLowerCase()
+  ) ? true: false;
+  
+  if (isPresentContact){
+      alert(`${newContact.name} is already in contacts.`)
+  } else {
+      dispatch(addContact(newContact));
+      form.reset();
+  }        
+}
+  
+ return (
       <>
-        <form  className={styles.formwrap}  onSubmit={this.handleSubmit}>
+        <form  className={styles.formwrap}  onSubmit={handleSubmit}>
           <label className={styles.contactFormLable}>
             <input
             className={styles.input}
-              onChange={this.inputHandler}
               type="text"
               name="name"
               placeholder="Enter name..."
-              value={name}
             ></input>
           </label>
           <label className={styles.contactFormLable}>
             <input
             className={styles.input}
-              onChange={this.inputHandler}
               type="tel"
               name="number"
               placeholder="Enter number..."
-              value={number}
             ></input>
           </label>
 
@@ -60,11 +51,7 @@ class ContactForm extends Component {
         </form>
       </>
     );
-  }
 }
 
-ContactForm.propTypes = {
-  addToPhonebook: PropTypes.func.isRequired,
-};
 
 export default ContactForm;

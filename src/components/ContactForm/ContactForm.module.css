@@ -3,18 +3,38 @@
 }
 
 .formwrap{
-  border: 2px solid #000000;
+  margin-left: 30px;
+  border: 2px solid #230258;
+  border-radius: 5px;
   padding: 10px;
   width: 300px;
 }
 .input{
   display: block;
+  min-width: 280px;
+  height: 30px;
+  border: #230258 solid 1px;
+  border-radius: 4px;
+  background-color: #23025886;
+}
+.input::placeholder{
+color: #fff;
+padding: 10px;
+font-family: 'Courier New', Courier, monospace;
 }
 .btn{
-  margin-top: 10px;
+  min-width: 80px;
+  height: 30px;
+  margin: 20px 100px 0px 100px;
   display: inline-block;
-  background-color: rgb(16, 51, 207);
+  color: #fff;
+  background-color: #230258;
   border-radius: 5px;
   border: transparent;
   cursor: pointer;
+}
+.header{
+  margin: 10px 10px 10px 80px;
+  font-size: 44px;
+  color: #230258;
 }
